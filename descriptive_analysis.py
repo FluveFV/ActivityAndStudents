@@ -13,55 +13,47 @@ des_dataset = des_dataset.fillna("no information")
 # distribution of sport behaviour: location of the user
 sns.countplot(des_dataset, x="new where", stat="percent")
 plt.title('sport sessions by location of the user')
-#plt.ylabel('sport session')
 plt.xlabel('location')
+plt.savefig('graphs/session_by_location.png', format="png")
 plt.show()
-
-plt.savefig('graphs/session_by_location.png')
 
 # distribution of sport behaviour: presence of others
 sns.countplot(des_dataset, x="new withw", stat="percent")
 plt.title('sport sessions by company')
-#plt.ylabel('sport session')
 plt.xlabel('company')
-
+plt.savefig('graphs/session_by_company.png', format="png")
 plt.show()
-plt.savefig('graphs/session_by_company.png')
 
 # distribution of sport behaviour: type of activity
 sns.countplot(des_dataset, x="sport", stat="percent")
 plt.title('sport sessions by type of activity')
-#plt.ylabel('sport session')
 plt.xlabel('type of activity')
-plt.xticks(rotation="vertical", fontsize="xx-small", visible=True)
-
+plt.xticks(rotation=45, fontsize="xx-small", ha="right")
+plt.savefig('graphs/session_by_activity.png', format="png")
 plt.show()
-plt.savefig('graphs/session_by_activity.png')
 
 # distribution of sport behaviour: duration
 sns.countplot(des_dataset, x="duration", stat="percent")
 plt.title('sport sessions by time duration')
-#plt.ylabel('sport session')
 plt.xlabel('duration of the activity (minutes)')
-plt.xticks(rotation="vertical", fontsize="small")
-
+plt.xticks(rotation=45, fontsize="xx-small", ha="center")
+plt.savefig('graphs/session_by_duration.png', format="png")
 plt.show()
-plt.savefig('graphs/session_by_duration.png')
 
 # distribution of sport behaviour: day
 sns.countplot(des_dataset, x="new time", stat="percent")
 plt.title('sport sessions by daily routine')
-#plt.ylabel('sport session')
 plt.xlabel('daily routine')
-
+plt.savefig('graphs/session_by_dailyroutine.png', format="png")
 plt.show()
-plt.savefig('graphs/session_by_dailyroutine.png')
 
+# distribution of sport behaviour: date
+days = list(des_dataset["date"].unique())
+days.sort()
 
-
-
-
-
-
-
-
+sns.countplot(des_dataset, x="date", stat="percent", order=days)
+plt.title('sport sessions by date')
+plt.xlabel('days of the survey')
+plt.xticks(rotation=45, fontsize="xx-small", ha="right")
+plt.savefig('graphs/session_by_date.png', format="png")
+plt.show()
