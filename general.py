@@ -1,15 +1,20 @@
 import pandas as pd
 import datetime
+import tqdm
 
 # load the datasets
-td_dataset = pd.read_stata("data/td_ita.dta")  # time diaries dataset
-demo_dataset = pd.read_stata("data/data4diarynew_ITA.dta") # demographics dataset
+inpath1 = "../dati/td_ita.dta" # insert system path for time diary !
+inpath2 = "../dati/data4diarynew_ITA.dta" # insert system path for demographics! !
+inpath3 = "../dati/meteo_nov_2020.csv" # insert system path for weather !
+
+td_dataset = pd.read_stata(inpath1)  # time diaries dataset
+demo_dataset = pd.read_stata(inpath2) # demographics dataset
 
 """ Cleaning procedure of the time diaries dataset """
 """ we need to apply various steps:
 1. consider only first two weeks of the survey
 2. consider only the variables we want to investigate
-3. consider only the sport activities"""
+3. consider only the physical activities"""
 
 # cleaning 1
 td_cleaned = td_dataset[td_dataset['first2w'] == 'First two weeks']
@@ -79,12 +84,12 @@ company = ['Partner', 'Friend(s)', 'Relative(s)', 'Roommate(s)', 'Other', 'Colle
 
 # function for reclassification
 def with_reclass(row):
-     if row["withw"] in company:
-         new_class = "company"
-     else:
-         new_class = "alone"
+    if row["withw"] in company:
+        new_class = "company"
+    else:
+        new_class = "alone"
 
-     return new_class
+    return new_class
 
 td_cleaned['new withw'] = td_cleaned.apply(with_reclass, axis=1)
 print(f"From the second transformation process we obtain the dataset: \n {td_cleaned}")
@@ -115,14 +120,14 @@ print(f"From the third transformation process we obtain the dataset: \n {td_clea
 
 # function for reclassification of the hours
 def timeslot_reclass(row):
-    if row["time"] < datetime.time(12, 0, 0):
+    if row['time'] >= datetime.time(5, 0, 0) and row["time"] < datetime.time(12, 0, 0): 
         new_class = "morning"
-    elif row["time"] <= datetime.time(12, 0, 0) and row["time"] < datetime.time(14, 0, 0):
-        new_class = "lunch"
+    elif row["time"] >= datetime.time(12, 0, 0) and row["time"] < datetime.time(14, 0, 0):
+        new_class = "midday"
     elif row["time"] >= datetime.time(14, 0, 0) and row["time"] < datetime.time(19, 0, 0):
         new_class = "afternoon"
     elif row["time"] >= datetime.time(19, 0, 0) and row["time"] < datetime.time(21, 0, 0):
-        new_class = "dinner"
+        new_class = "evening"
     else:
         new_class = "night"
     return new_class
@@ -131,7 +136,7 @@ td_cleaned['new time'] = td_cleaned.apply(timeslot_reclass, axis=1)
 print(f"From the fourth transformation process we obtain the dataset: \n {td_cleaned}")
 
 # weather variable
-nov_meteo = pd.read_csv("data/meteo_nov_2020.csv")
+nov_meteo = pd.read_csv(inpath3)
 print(f"weather for the month of all the days of november 2020: \n {nov_meteo.head()}")
 
 # reclass of day variable (in order to merge with td_cleaned dataset)
@@ -157,7 +162,7 @@ print(f"weather dataset cleaned is now: \n {new_nov_meteo}")
 td_cleaned['id'] = td_cleaned['id'].astype(int)
 demo_dataset['userid'] = demo_dataset['userid'].astype(int)
 
-td_cleaned.to_csv('data/descriptive_dataset.csv', index=False)
+td_cleaned.to_csv('descriptive_dataset.csv', index=False)
 
 
 # merge the two datasets
@@ -169,12 +174,12 @@ demo = demo_dataset[['userid', 'w1_A01', 'cohort', 'w1_A04UNITN', 'w1_A09UNITN',
 sport_demo = td_cleaned.merge(demo, left_on='id', right_on='userid', how='left')
 
 print(f"the final dataset with sport sessions and demographic features is: \n {sport_demo}")
-sport_demo.to_csv('data/sport_demo_dataset.csv', index=False)
+sport_demo.to_csv('sport_demo_dataset.csv', index=False)
 
 # merge the td_cleaned dataset with the demographics characteristics of the user
 attitude = demo_dataset[['userid', 'Extraversion', 'Agreeableness', 'Conscientiousness', 'Neuroticism', 'Openness']]
 sport_attitude = td_cleaned.merge(attitude, left_on='id', right_on='userid', how='left')
 
 print(f"the final dataset with sport sessions and psychological features is: \n {sport_attitude}")
-sport_attitude.to_csv('data/sport_attitude_dataset.csv', index=False)
+sport_attitude.to_csv('sport_attitude_dataset.csv', index=False)
 
