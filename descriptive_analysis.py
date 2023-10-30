@@ -14,14 +14,14 @@ des_dataset = des_dataset.fillna("no information")
 sns.countplot(des_dataset, x="new where", stat="percent")
 plt.title('sport sessions by location of the user')
 plt.xlabel('location')
-plt.savefig('graphs/session_by_location.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_location.png', format="png")
 plt.show()
 
 # distribution of sport behaviour: presence of others
 sns.countplot(des_dataset, x="new withw", stat="percent")
 plt.title('sport sessions by company')
 plt.xlabel('company')
-plt.savefig('graphs/session_by_company.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_company.png', format="png")
 plt.show()
 
 # distribution of sport behaviour: type of activity
@@ -29,7 +29,7 @@ sns.countplot(des_dataset, x="sport", stat="percent")
 plt.title('sport sessions by type of activity')
 plt.xlabel('type of activity')
 plt.xticks(rotation=45, fontsize="xx-small", ha="right")
-plt.savefig('graphs/session_by_activity.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_activity.png', format="png")
 plt.show()
 
 # distribution of sport behaviour: duration
@@ -37,14 +37,14 @@ sns.countplot(des_dataset, x="duration", stat="percent")
 plt.title('sport sessions by time duration')
 plt.xlabel('duration of the activity (minutes)')
 plt.xticks(rotation=45, fontsize="xx-small", ha="center")
-plt.savefig('graphs/session_by_duration.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_duration.png', format="png")
 plt.show()
 
 # distribution of sport behaviour: day
 sns.countplot(des_dataset, x="new time", stat="percent")
 plt.title('sport sessions by daily routine')
 plt.xlabel('daily routine')
-plt.savefig('graphs/session_by_dailyroutine.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_dailyroutine.png', format="png")
 plt.show()
 
 # distribution of sport behaviour: date
@@ -55,5 +55,5 @@ sns.countplot(des_dataset, x="date", stat="percent", order=days)
 plt.title('sport sessions by date')
 plt.xlabel('days of the survey')
 plt.xticks(rotation=45, fontsize="xx-small", ha="right")
-plt.savefig('graphs/session_by_date.png', format="png")
+plt.savefig('graphs/descriptive_graphs/session_by_date.png', format="png")
 plt.show()
