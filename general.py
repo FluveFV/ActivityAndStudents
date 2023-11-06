@@ -42,9 +42,10 @@ we want to apply a reclassification of the following variables:
 # time session variable
 new_td = td_cleaned
 new_td['date_not'] = pd.to_datetime(new_td['date_not'])
+new_td['date_dur'] = new_td['date_not'] - timedelta(hours = 5) # in this way we can consider sport sessions across two days as single sport sessions
 
-new_td = new_td .sort_values('date_not') # sort the dataframe according to "date_not"
-new_td['time_diff'] = new_td['date_not'].diff() # compute the time difference between adjacent rows
+new_td = new_td .sort_values('date_dur') # sort the dataframe according to "date_not"
+new_td['time_diff'] = new_td['date_dur'].diff() # compute the time difference between adjacent rows
 
 new_session = (new_td['time_diff'] > pd.Timedelta(minutes=30)) | new_td['time_diff'].isnull() # search for new start session
 new_td['session'] = new_session.cumsum() # Creazione di un nuovo identificatore di sessione basato su new_session
@@ -62,18 +63,21 @@ td_cleaned = td_cleaned.merge(collapsed_sessions, left_on=['id', 'date_not'], ri
 print(f"From the first transformation process we obtain the dataset: \n {td_cleaned}")
 
 # where variable
-indoor_location1 = ['Home apartment /room', 'Weekend home or holiday apartment', 'House (friends others)', 'Relatives Home']
-indoor_location2 = ['Another indoor place', 'Gym, swimming pool, Sports centre …', 'Other university place']
-outdoor_location = ['Countryside/mountain/hill/beach', 'Home garden/patio/courtyard', 'In the street']
+indoor_home = ['Home apartment /room', 'Weekend home or holiday apartment', 'House (friends others)', 'Relatives Home']
+indoor_gym = ['Another indoor place', 'Gym, swimming pool, Sports centre …', 'Other university place']
+outdoor = ['Countryside/mountain/hill/beach', 'Home garden/patio/courtyard', 'In the street', 'Another outdoor place',
+           'Café, pub, bar', 'Shops, shopping centres']
 
 # function for reclassification
 def where_reclass(row):
-    if row['where'] in indoor_location1:
+    if row['where'] in indoor_dome:
         new_class = 'indoor - home'
-    elif row['where'] in outdoor_location:
+    elif row['where'] in outdoor:
         new_class = 'outdoor'
-    else:
+    elif row['where'] in indoor_gym:
         new_class = 'indoor - gym'
+    else:
+        new_class = np.nan
 
     return new_class
 
@@ -162,24 +166,15 @@ print(f"weather dataset cleaned is now: \n {new_nov_meteo}")
 td_cleaned['id'] = td_cleaned['id'].astype(int)
 demo_dataset['userid'] = demo_dataset['userid'].astype(int)
 
+# we save a dataset for descritpive analysis
 td_cleaned.to_csv('descriptive_dataset.csv', index=False)
-
 
 # merge the two datasets
 td_cleaned = td_cleaned[['id', 'duration', 'new where', 'new withw', 'date', 'new time']]
 td_cleaned = td_cleaned.merge(new_nov_meteo, left_on='date', right_on='date', how='left') # left join of the two datasets
 
-# merge the td_cleaned dataset with the demographics characteristics of the user
-demo = demo_dataset[['userid', 'w1_A01', 'cohort', 'w1_A04UNITN', 'w1_A09UNITN', 'w1_A10UNITN']]
-sport_demo = td_cleaned.merge(demo, left_on='id', right_on='userid', how='left')
+# merge the td_cleaned dataset with the demographic dataset
+final_dataset = td_cleaned.merge(demo_dataset, left_on='id', right_on='userid', how='left')
 
 print(f"the final dataset with sport sessions and demographic features is: \n {sport_demo}")
-sport_demo.to_csv('sport_demo_dataset.csv', index=False)
-
-# merge the td_cleaned dataset with the demographics characteristics of the user
-attitude = demo_dataset[['userid', 'Extraversion', 'Agreeableness', 'Conscientiousness', 'Neuroticism', 'Openness']]
-sport_attitude = td_cleaned.merge(attitude, left_on='id', right_on='userid', how='left')
-
-print(f"the final dataset with sport sessions and psychological features is: \n {sport_attitude}")
-sport_attitude.to_csv('sport_attitude_dataset.csv', index=False)
-
+final_demo.to_csv('sport_dataset.csv', index=False)
