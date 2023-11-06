@@ -3,164 +3,132 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 '''load the datasets'''
-sport_att = pd.read_csv("data/sport_attitude_dataset.csv")
-sport_demo = pd.read_csv("data/sport_demo_dataset.csv")
-
-''' --- bivariate analysis for sport behaviour and user attitudes --- '''
-
-# 1. attitudes and place
-'''hypothesis:
-persone più socievoli avranno maggiore probabilità di frequentare luoghi pubblici (palestre) per fare sport rispetto a persone meno socievoli 
-'''
-fig, axes = plt.subplots(3, 2, figsize=(12, 10))
-
-sns.boxplot(data=sport_att, x="new where", y="Extraversion", ax=axes[0,0], hue="new where")
-axes[0,0].set_title('Extraversion')
-axes[0,0].set_ylabel('')
-axes[0,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new where", y="Agreeableness", ax=axes[0,1], hue="new where")
-axes[0,1].set_title('Agreeableness')
-axes[0,1].set_ylabel('')
-axes[0,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new where", y="Conscientiousness", ax=axes[1,0], hue="new where")
-axes[1,0].set_title('Conscientiousness')
-axes[1,0].set_ylabel('')
-axes[1,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new where", y="Neuroticism", ax=axes[1,1], hue="new where")
-axes[1,1].set_title('Neuroticism')
-axes[1,1].set_ylabel('')
-axes[1,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new where", y="Openness", ax=axes[2,0], hue="new where")
-axes[2,0].set_title('Openness')
-axes[2,0].set_ylabel('')
-axes[2,0].set_xlabel('')
-
-fig.delaxes(axes[2,1])
-
-plt.suptitle("Location of sport session by users attitudes")
-plt.tight_layout()
-plt.savefig('graphs/bivariate_graphs/where_by_attitude.png', format="png")
-plt.show()
-
-# 2. attitudes and company
-'''hypothesis:
-persone più socievoli avranno maggiore probabilità di frequentare luoghi pubblici per fare sport rispetto a persone meno socievoli
-'''
-fig, axes = plt.subplots(3, 2, figsize=(12, 10))
-
-sns.boxplot(data=sport_att, x="new withw", y="Extraversion", ax=axes[0,0], hue="new withw")
-axes[0,0].set_title('Extraversion')
-axes[0,0].set_ylabel('')
-axes[0,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new withw", y="Agreeableness", ax=axes[0,1], hue="new withw")
-axes[0,1].set_title('Agreeableness')
-axes[0,1].set_ylabel('')
-axes[0,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new withw", y="Conscientiousness", ax=axes[1,0], hue="new withw")
-axes[1,0].set_title('Conscientiousness')
-axes[1,0].set_ylabel('')
-axes[1,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new withw", y="Neuroticism", ax=axes[1,1], hue="new withw")
-axes[1,1].set_title('Neuroticism')
-axes[1,1].set_ylabel('')
-axes[1,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new withw", y="Openness", ax=axes[2,0], hue="new withw")
-axes[2,0].set_title('Openness')
-axes[2,0].set_ylabel('')
-axes[2,0].set_xlabel('')
-
-fig.delaxes(axes[2,1])
-
-plt.suptitle("Company of sport session by users attitudes")
-plt.tight_layout()
-plt.savefig('graphs/bivariate_graphs/company_by_attitude.png', format="png")
-plt.show()
-
-# 3. attitudes and daily routine
-'''hypothesis:
-to implement
-'''
-fig, axes = plt.subplots(3, 2, figsize=(12, 10))
-
-sns.boxplot(data=sport_att, x="new time", y="Extraversion", ax=axes[0,0], hue="new time")
-axes[0,0].set_title('Extraversion')
-axes[0,0].set_ylabel('')
-axes[0,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new time", y="Agreeableness", ax=axes[0,1], hue="new time")
-axes[0,1].set_title('Agreeableness')
-axes[0,1].set_ylabel('')
-axes[0,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new time", y="Conscientiousness", ax=axes[1,0], hue="new time")
-axes[1,0].set_title('Conscientiousness')
-axes[1,0].set_ylabel('')
-axes[1,0].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new time", y="Neuroticism", ax=axes[1,1], hue="new time")
-axes[1,1].set_title('Neuroticism')
-axes[1,1].set_ylabel('')
-axes[1,1].set_xlabel('')
-
-sns.boxplot(data=sport_att, x="new time", y="Openness", ax=axes[2,0], hue="new time")
-axes[2,0].set_title('Openness')
-axes[2,0].set_ylabel('')
-axes[2,0].set_xlabel('')
-
-fig.delaxes(axes[2,1])
-
-plt.suptitle("Routine of sport session by users attitudes")
-plt.tight_layout()
-plt.savefig('graphs/bivariate_graphs/routine_by_attitude.png', format="png")
-plt.show()
-
+sport_data = pd.read_csv("data/sport_dataset.csv")
 
 ''' --- bivariate analysis for sport behaviour and user demographics --- '''
 
 # 1. gender and place
-'''hypothesis:
-female tend to practice more often sports in close places (safety reasons + type of sport?)
-'''
-sns.catplot(data=sport_demo, x="new where", kind="count", hue="w1_A01")
+sns.countplot(data=sport_data, x="new where", hue="w1_A01", stat="percent")
 plt.title('sport sessions by gender and location')
 plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(title='sex', loc='upper right', ncol=2)
+plt.xlabel('where (recoded)')
 plt.savefig('graphs/bivariate_graphs/where_by_gender.png', format="png")
 plt.show()
 
-# 2. age and session duration
-sns.boxplot(data=sport_demo, x="cohort", y="duration")
-plt.title('sport sessions by age and session duration')
+# 2. gender and company
+sns.countplot(data=sport_data, x="new withw", hue="w1_A01", stat="percent")
+plt.title('sport sessions by gender and comapny')
 plt.tight_layout()
-plt.savefig('graphs/bivariate_graphs/duration_by_age.png', format="png")
+plt.yticks(range(0, 101, 10))
+plt.legend(title='sex', loc='upper right', ncol=2)
+plt.xlabel('with who (recoded)')
+plt.savefig('graphs/bivariate_graphs/company_by_gender.png', format="png")
 plt.show()
+
+# 3. gender and type of activity
+sns.countplot(data=sport_data, x="sport", hue="w1_A01", stat="percent")
+plt.title('sport sessions by gender and sport activity')
+plt.xticks(rotation=45, fontsize="xx-small", ha="right")
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(title='sex', loc='upper right', ncol=2)
+plt.xlabel('type of sport activity')
+plt.savefig('graphs/bivariate_graphs/activity_by_gender.png', format="png")
+plt.show()
+
+# 4. gender and daily routine
+day_order = ["morning", "midday", "afternoon", "evening", "night"]
+sns.countplot(data=sport_data, x="new time", hue="w1_A01", stat="percent", order=day_order)
+plt.title('sport sessions by gender and sport routine')
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(title='sex', loc='upper right', ncol=2)
+plt.xlabel('part of the day (recoded)')
+plt.savefig('graphs/bivariate_graphs/ruotine_by_gender.png', format="png")
+plt.show()
+
+# 5. department and session duration
+sns.violinplot(data=sport_data, x="duration", hue="department", fill=False, inner='point')
+plt.title('sport sessions by duration and user department')
+plt.xticks(rotation=45, fontsize="xx-small", ha="right")
+plt.xlabel('duration of sport session')
+plt.legend(loc='lower right', title='unitn departments', fontsize='xx-small')
+plt.tight_layout()
+plt.savefig('graphs/bivariate_graphs/duration_by_department.png', format="png")
+plt.show()
+
+# 6. department and type of activity
+sns.countplot(data=sport_data, x="sport", hue="department", stat="percent")
+plt.title('sport sessions by department and sport activity')
+plt.xticks(rotation=45, fontsize="small", ha="right")
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(ncol=2, fontsize='x-small', title='unitn departments')
+plt.xlabel('type of sport activity')
+plt.savefig('graphs/bivariate_graphs/activity_by_department.png', format="png")
+plt.show()
+
 
 ''' --- bivariate analysis for sport behaviour --- '''
 
-# 1. place and company
-'''hypothesis:
-based on the location of session sport the company could be different
-'''
-sns.catplot(data=sport_demo, x="new where", kind="count", hue="new withw")
+# 1. type of activity and place
+sns.countplot(data=sport_data, x="new where", hue="sport", stat="percent")
+plt.title('sport sessions by location and sport activity')
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(ncol=2, fontsize='small', title='sport activities')
+plt.xlabel('where (recoded)')
+plt.savefig('graphs/bivariate_graphs/where_by_activity.png', format="png")
+plt.show()
+
+# 2. type of activity and company
+sns.countplot(data=sport_data, x="new withw", hue="sport", stat="percent")
+plt.title('sport sessions by company and sport activity')
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(ncol=2, fontsize='small', title='sport activities')
+plt.xlabel('with who (recoded)')
+plt.savefig('graphs/bivariate_graphs/company_by_activity.png', format="png")
+plt.show()
+
+# 3. type of activity and routine
+sns.countplot(data=sport_data, x="new time", hue="sport", stat="percent", order=day_order)
+plt.title('sport sessions by time and activity type')
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(ncol=2, fontsize='small', title='sport activities')
+plt.xlabel('part of the day (recoded)')
+plt.savefig('graphs/bivariate_graphs/time_by_activity.png', format="png")
+plt.show()
+
+# 4. place and company
+sns.countplot(data=sport_data, x="new where", hue="new withw", stat="percent")
 plt.title('sport sessions by company and location')
 plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(ncol=2, title='with who (recoded)')
+plt.xlabel('where (recoded)')
 plt.savefig('graphs/bivariate_graphs/where_by_company.png', format="png")
 plt.show()
 
-# 2. place and time
-'''hypothesis:
-based on the time of the day the user is practicing sport, the location will be different
-'''
-sns.catplot(data=sport_demo, x="new where", kind="count", hue="new time")
+# 5. place and routine
+sns.countplot(data=sport_data, x="new where", hue="new time", stat="percent", hue_order=day_order)
 plt.title('sport sessions by time and location')
-#plt.legend(loc='upper right', title='Time')
 plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(title='part of the day (recoded)', ncol=2)
+plt.xlabel('where (recoded)')
 plt.savefig('graphs/bivariate_graphs/where_by_time.png', format="png")
+plt.show()
+
+# 6. company and routine
+sns.countplot(data=sport_data, x="new withw", hue="new time", stat="percent", hue_order=day_order)
+plt.title('sport sessions by location and sport activity')
+plt.tight_layout()
+plt.yticks(range(0, 101, 10))
+plt.legend(title='part of the day (recoded)', ncol=2)
+plt.xlabel('with who (recoded)')
+plt.savefig('graphs/bivariate_graphs/company_by_time.png', format="png")
 plt.show()
