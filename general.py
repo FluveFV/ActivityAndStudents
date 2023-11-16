@@ -14,7 +14,12 @@ demo_dataset = pd.read_stata(inpath2) # demographics dataset
 """ --- Cleaning procedure of the time diaries dataset --- """
 """ we need to apply various steps:
 1. consider only first two weeks of the survey
-2. consider only the variables we want to investigate
+2. consider only the variables we want to investigate:
+    - id of the user, 
+    - date, 
+    - what the user is doing,
+    - with who, 
+    - where and what type of sport activity
 3. consider only the sport activities"""
 
 # cleaning 1
