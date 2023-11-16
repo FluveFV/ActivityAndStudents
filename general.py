@@ -38,9 +38,9 @@ we want to add new variables:
 - time session: duration of the sport activity
 
 we want to apply a reclassification of the following variables:
-- where column: the new categories are 'indoor - home', 'indoor - gym', 'outdoor'
+- where column: the new categories are 'indoor', 'outdoor'
 - with who: the new categories are 'company', 'alone'
-- time slot: the new categories are 'morning', 'midday', 'afternoon', 'evening', 'night'
+- time: the new categories are 'morning', 'midday', 'afternoon', 'evening', 'night'
 """
 
 # time session variable
