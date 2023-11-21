@@ -159,9 +159,7 @@ final_dataset = pd.DataFrame(data=final_data)
 final_dataset = final_dataset.groupby('id', as_index=False).sum()
 
 # merge the td_cleaned dataset with the demographic dataset
-almost_dataset = final_dataset.merge(demo_dataset, left_on='id', right_on='userid', how='left')
-complete_dataset = almost_dataset.merge(total_dur, left_on='id', right_on='id', how='left')
-
+complete_dataset = final_dataset.merge(demo_dataset, left_on='id', right_on='userid', how='left')
 cat_dataset = td_cleaned.merge(demo_dataset, left_on='id', right_on='userid', how='left')
 
 # clean the dataset by keeping only the variables we want to investigate
