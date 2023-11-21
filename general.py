@@ -26,7 +26,7 @@ demo_dataset = pd.read_stata(inpath2) # demographics dataset
 td_cleaned = td_dataset[td_dataset['first2w'] == 'First two weeks']
 
 # cleaning 3
-td_cleaned= td_cleaned[(td_cleaned["what"]=="Sport") | (td_cleaned["what"]=="I will participate in sports activities")]
+td_cleaned= td_cleaned[(td_cleaned["what"]=="Sport") | (td_cleaned["what"]=="I will participate in sports activities") | (td_cleaned["what"]=="Walking")]
 
 
 """ Variable transformation """
@@ -93,6 +93,9 @@ td_cleaned['sport recoded'] = td_cleaned['sport'].replace(['Walking, Trekking, a
                                                            'Gymnastics and fitness',
                                                            'Other indoor activities', 'Other indoor activities'])
 
+# adding the category Walking to the sport activity
+td_cleaned['sport recoded'] = td_cleaned['sport recoded'].cat.add_categories('Walking')
+td_cleaned.loc[td_cleaned['what'] == 'Walking', 'sport recoded'] = 'Walking'
 
 # function for reclassification of the hours
 def timeslot_reclass(row):
@@ -115,7 +118,7 @@ td_cleaned['id'] = td_cleaned['id'].astype(int)
 demo_dataset['userid'] = demo_dataset['userid'].astype(int)
 
 # consider only the variables we want to investigate
-td_cleaned = td_cleaned[['id', 'start_time', 'week', 'DD_not', 'hh_not', 'sport', 'duration', 'where recoded', 'withw recoded', 'hours recoded','sport recoded']]
+td_cleaned = td_cleaned[['id', 'start_time', 'week', 'DD_not', 'hh_not', 'sport recoded', 'duration', 'where recoded', 'withw recoded', 'hours recoded']]
 
 # where variable
 where_df = td_cleaned.pivot(columns=['where recoded'], values='duration')
@@ -135,7 +138,7 @@ time_df = time_df[['morning', 'midday', 'afternoon', 'evening', 'night']]
 # sport variable
 sport_df = td_cleaned.pivot(columns=['sport recoded'], values='duration')
 sport_df = sport_df.fillna(0)
-sport_df = sport_df[['Walking, Trekking, and hiking', 'Jogging and running', 'Outdoor activities', 'Gymnastics and fitness', 'Other indoor activities']]
+sport_df = sport_df[['Walking, Trekking, and hiking', 'Jogging and running', 'Outdoor activities', 'Gymnastics and fitness', 'Other indoor activities', 'Walking']]
 
 # merge all the dataframes together
 final_data = {'id': pd.Series(td_cleaned['id']),
@@ -148,11 +151,12 @@ final_data = {'id': pd.Series(td_cleaned['id']),
               'afternoon': pd.Series(time_df['afternoon']),
               'evening': pd.Series(time_df['evening']),
               'night': pd.Series(time_df['night']),
-              'walking': pd.Series(sport_df['Walking, Trekking, and hiking']),
+              'sport walking': pd.Series(sport_df['Walking, Trekking, and hiking']),
               'running': pd.Series(sport_df['Jogging and running']),
               'outdoor activities': pd.Series(sport_df['Outdoor activities']),
               'fitness': pd.Series(sport_df['Gymnastics and fitness']),
               'indoor activities': pd.Series(sport_df['Other indoor activities']),
+              'step walking': pd.Series(sport_df['Walking'])
               }
 
 final_dataset = pd.DataFrame(data=final_data)
@@ -164,7 +168,7 @@ cat_dataset = td_cleaned.merge(demo_dataset, left_on='id', right_on='userid', ho
 
 # clean the dataset by keeping only the variables we want to investigate
 complete_dataset = complete_dataset[['id', 'duration', 'indoor', 'outdoor', 'alone', 'company', 'morning', 'midday',
-                                     'afternoon', 'evening', 'night','walking',
+                                     'afternoon', 'evening', 'night','sport walking', 'step walking',
                                      'running', 'outdoor activities', 'fitness', 'indoor activities',
                                      'degree', 'department', 'w1_A01']]
 
