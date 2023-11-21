@@ -37,7 +37,7 @@ td_cleaned= td_cleaned[(td_cleaned["what"]=="Sport") | (td_cleaned["what"]=="I w
 we want to add new variables:
 - time session: duration of the sport activity
 
-we want to apply a reclassification of the following variables:
+we want to reclassify the following variables:
 - where column: the new categories are 'indoor', 'outdoor'
 - with who: the new categories are 'company', 'alone'
 - time: the new categories are 'morning', 'midday', 'afternoon', 'evening', 'night'
@@ -118,8 +118,7 @@ td_cleaned['id'] = td_cleaned['id'].astype(int)
 demo_dataset['userid'] = demo_dataset['userid'].astype(int)
 
 # consider only the variables we want to investigate
-td_cleaned = td_cleaned[['id', 'sport', 'duration', 'where recoded', 'withw recoded', 'hours recoded','sport recoded']]
-total_dur = td_cleaned[['id','duration']].groupby(['id'], as_index=False).sum()
+td_cleaned = td_cleaned[['id', 'start_time', 'week', 'DD_not', 'hh_not', 'sport', 'duration', 'where recoded', 'withw recoded', 'hours recoded','sport recoded']]
 
 # where variable
 where_df = td_cleaned.pivot(columns=['where recoded'], values='duration')
@@ -160,7 +159,6 @@ final_data = {'id': pd.Series(td_cleaned['id']),
               }
 
 final_dataset = pd.DataFrame(data=final_data)
-
 final_dataset = final_dataset.groupby('id', as_index=False).sum()
 
 # merge the td_cleaned dataset with the demographic dataset
@@ -174,15 +172,6 @@ complete_dataset = complete_dataset[['id', 'duration', 'indoor', 'outdoor', 'alo
                                      'afternoon', 'evening', 'night','walking',
                                      'running', 'outdoor activities', 'fitness', 'indoor activities',
                                      'degree', 'department', 'w1_A01']]
-
-# reclassification of department variable
-
-'''
-complete_dataset['department recoded'] = complete_dataset['department'].replace(['Engineering and Applied Sciences', 'Natural Sciences', 'Medicine and veterinary medicine', 'Agricultural',
-                                                                                 'Business/economics', 'Humanities', 'Law', 'International Relations and Public Administration', 'Social Sciences'],
-                                                                                ['STEM', 'STEM', 'STEM', 'STEM',
-                                                                                 'humanities', 'humanities', 'humanities', 'humanities', 'humanities'])
-'''
 
 cat_dataset.to_csv('data/categorical_sport_dataset.csv', index=False)
 complete_dataset.to_csv('data/continuous_sport_dataset.csv', index=False)
