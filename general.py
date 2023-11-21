@@ -25,9 +25,6 @@ demo_dataset = pd.read_stata(inpath2) # demographics dataset
 # cleaning 1
 td_cleaned = td_dataset[td_dataset['first2w'] == 'First two weeks']
 
-# cleaning 2
-td_cleaned = td_cleaned[['id', 'date_not', 'what', 'withw', 'where', 'sport']]
-
 # cleaning 3
 td_cleaned= td_cleaned[(td_cleaned["what"]=="Sport") | (td_cleaned["what"]=="I will participate in sports activities")]
 
