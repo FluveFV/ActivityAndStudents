@@ -6,7 +6,9 @@ This project strives for **knowledge on how students live their lives in regard 
 
 ***Research Question(s)***
 Q. 1: What type and when are students practicing physical activity?
+
 Q. 2: Which main social factors seem to influence significantly the students’ physical activity behaviour?
+
 Q. 3: Which main psychological factors influence significantly students’ sport behaviour?
 
 The results are reported in a small paper. 
