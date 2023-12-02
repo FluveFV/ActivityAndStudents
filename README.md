@@ -5,6 +5,7 @@ While moving from a purely Sociological setting to a Data Science one, we the au
 This project strives for **knowledge on how students live their lives in regard to sport and physical activity in Trento**. Even during the (then) ongoing COVID-19 pandemic, students exercised for wellbeing. 
 
 ***Research Question(s)***
+
 Q. 1: What type and when are students practicing physical activity?
 
 Q. 2: Which main social factors seem to influence significantly the students’ physical activity behaviour?
