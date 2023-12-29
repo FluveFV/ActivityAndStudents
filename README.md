@@ -8,8 +8,11 @@ This research project is supposed to be reproducible and trustworthy. In order f
 
 Steps: 
 0 - Obtain the three datasets we mentioned previously. 
+
 0.5 - Check your modules version using the specified packages in "requirements.txt"
+
 1 - Run "Processing and cleaning data" notebook first. 
+
 2 - You can now run any other notebook to obtain different sections of the paper. Each notebook has a specific analysis purpose.
 
 ***Research Question(s)***
