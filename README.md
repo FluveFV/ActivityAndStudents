@@ -4,7 +4,13 @@ While moving from a purely Sociological setting to a Data Science one, we the au
 
 This project strives for **knowledge on how students live their lives in regard to sport and physical activity in Trento**. Even during the (then) ongoing COVID-19 pandemic, students exercised for wellbeing. 
 
-This research project is supposed to be reproducible and trustworthy. In order for it to work, you need to ask for the WeNet project to obtain the data that you will put in the "data" folder. 
+This research project is supposed to be reproducible and trustworthy. In order for it to work, you need to ask for the WeNet project to obtain the data that you will put in the "data" folder. The data we used is: time diary, data for time diary (socio-demographic and psychological attributes), step sensor. 
+
+Steps: 
+0 - Obtain the three datasets we mentioned previously. 
+0.5 - Check your modules version using the specified packages in "requirements.txt"
+1 - Run "Processing and cleaning data" notebook first. 
+2 - You can now run any other notebook to obtain different sections of the paper. Each notebook has a specific analysis purpose.
 
 ***Research Question(s)***
 
