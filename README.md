@@ -7,6 +7,7 @@ This project strives for **knowledge on how students live their lives in regard 
 This research project is supposed to be reproducible and trustworthy. In order for it to work, you need to ask for the WeNet project to obtain the data that you will put in the "data" folder. The data we used is: time diary, data for time diary (socio-demographic and psychological attributes), step sensor. 
 
 Steps: 
+
 0 - Obtain the three datasets we mentioned previously. 
 
 0.5 - Check your modules version using the specified packages in "requirements.txt"
