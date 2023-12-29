@@ -14,7 +14,9 @@ Q. 2: Which main social factors seem to influence significantly the students’ 
 
 Q. 3: Which main psychological factors influence significantly students’ sport behaviour?
 
-The results are reported in a small paper. 
+The results are shown interpreted in a report paper. 
+![with_pattern_company](https://github.com/FluveV/ActivityAndStudents/assets/128046201/6ebde57a-4545-4320-85d3-6850fca09a43)
+
 ![sports](https://github.com/FluveV/ActivityAndStudents/assets/128046201/c5262a20-bade-4026-9001-d01c54e67923)
 Courtesy of University of Worcester
 ![sport](https://github.com/FluveV/ActivityAndStudents/assets/128046201/985b53f0-6169-4b35-b3dc-67e24e2a4724)
