@@ -25,6 +25,12 @@ Q. 2: Which main social factors seem to influence significantly the students’ 
 Q. 3: Which main psychological factors influence significantly students’ sport behaviour?
 
 The results are shown interpreted in a report paper published here: [Research Gate](https://www.researchgate.net/publication/376891089_Studies_on_human_behaviour_students_and_physical_activity_in_Trento_November_2020) or directly in [this repository]()
+_The theory for this report is exceptionally short as not much was found within quantitative reserch - at the time of writing. For context, different parts of the report were written by different people and all reviewed by Davide Vandelli._
+
+- _Socio-demographic dimension_: mostly written by Maja Dall'Acqua
+- _Personality analysis_: mostly written by Mattia Chemotti
+- _Time patterns analysis_: mostly written by Davide Vandelli
+- _Other sections_: mostly co-written by Davide and Maja
 
 ![with_pattern_company](https://github.com/FluveV/ActivityAndStudents/assets/128046201/6ebde57a-4545-4320-85d3-6850fca09a43)
 
